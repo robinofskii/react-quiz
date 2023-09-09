@@ -1,4 +1,5 @@
-import { Action } from '../../App';
+import { Action } from '../../types';
+
 import './StartScreen.scss';
 
 interface Props {

@@ -7,6 +7,7 @@ import Error from './components/Error/Error';
 import Loader from './components/Loader/Loader';
 import StartScreen from './components/StartScreen/StartScreen';
 import Question from './components/Question/Question';
+import { Action, QuestionType } from './types';
 
 enum Status {
   'loading',
@@ -16,28 +17,16 @@ enum Status {
   'done',
 }
 
-type Question = {
-  question: string;
-  options: string[];
-  correctOption: number;
-  points: number;
-};
-
-export type Action =
-  | { type: 'FETCH_QUESTIONS' }
-  | { type: 'FETCH_QUESTIONS_SUCCESS'; payload: Question[] }
-  | { type: 'FETCH_QUESTIONS_ERROR' }
-  | { type: 'START_QUIZ' };
-
 type State = {
-  questions: Question[];
+  questions: QuestionType[];
   status: Status;
-  currentQuestion?: number;
+  currentQuestion: number;
 };
 
 const initialState: State = {
   questions: [],
   status: Status.loading,
+  currentQuestion: 0,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -57,10 +46,9 @@ const reducer = (state: State, action: Action): State => {
 };
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer<Reducer<State, Action>>(
-    reducer,
-    initialState
-  );
+  const [{ questions, status, currentQuestion }, dispatch] = useReducer<
+    Reducer<State, Action>
+  >(reducer, initialState);
 
   const numQuestions = questions.length;
 
@@ -68,7 +56,7 @@ function App() {
     dispatch({ type: 'FETCH_QUESTIONS' });
     fetch('http://localhost:3001/questions')
       .then((res) => res.json())
-      .then((data: Question[]) => {
+      .then((data: QuestionType[]) => {
         dispatch({ type: 'FETCH_QUESTIONS_SUCCESS', payload: data });
       })
       .catch((err) => {
@@ -89,7 +77,7 @@ function App() {
       content = <StartScreen numQuestions={numQuestions} dispatch={dispatch} />;
       break;
     case Status.active:
-      content = <Question />;
+      content = <Question question={questions[currentQuestion]} />;
       break;
     default:
       content =

@@ -1,0 +1,16 @@
+.question-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+
+  > .btn-option {
+    transition:
+      transform 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.05) translateY(-2px);
+      background-color: var(--color-primary);
+    }
+  }
+}
