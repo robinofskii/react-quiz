@@ -65,6 +65,14 @@ const reducer = (state: State, action: Action): State => {
         points: isCorrect ? state.points + question.points : state.points,
       };
     }
+    case 'RESET':
+      return {
+        questions: state.questions,
+        status: Status.success,
+        currentQuestion: 0,
+        playerAnswer: undefined,
+        points: 0,
+      };
     default:
       console.error('Unknown action type');
       return state;
@@ -120,6 +128,12 @@ function App() {
         <>
           <p>Points: {points}</p>
           <p>Done!</p>
+          <button
+            className="btn btn-warning"
+            onClick={() => dispatch({ type: 'RESET' })}
+          >
+            Reset
+          </button>
         </>
       );
       break;
