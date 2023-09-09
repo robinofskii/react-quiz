@@ -1,27 +1,52 @@
-# React + TypeScript + Vite
+# react-quiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
 
-Currently, two official plugins are available:
+- [react-quiz](#react-quiz)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about-)
+  - [Getting Started](#getting-started-)
+    - [Prerequisites](#prerequisites)
+    - [Installing](#installing)
+  - [Usage](#usage-)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About <a name = "about"></a>
 
-## Expanding the ESLint configuration
+This is a simple quiz app built with React. I used it to practice some more intermediate React concepts like state management with reducers and contexts. I also used it to practice some more advanced CSS concepts like animations and transitions. And used CSS variables combined with SCSS mixins to make the app more responsive.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started <a name = "getting_started"></a>
 
-- Configure the top-level `parserOptions` property like this:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+### Prerequisites
+
+What things you need to install the software and how to install them.
+
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/) (optional)
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running.
+
+Clone the repo
+
+```bash
+git clone
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies
+
+```bash
+yarn
+```
+
+Start the development server
+
+```bash
+yarn dev
+```
+
+## Usage <a name = "usage"></a>
+
+You can use this project as a template for your own React Quiz app. Feel free to fork it and make it your own.
