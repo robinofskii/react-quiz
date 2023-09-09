@@ -11,22 +11,12 @@ body {
 
 :root {
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color-text);
+  background-color: var(--color-background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
-  @media screen and (prefers-color-scheme: dark) {
-    color: var(--color-text-dark);
-    background-color: var(--color-background-dark);
-  }
-
-  @media screen and (prefers-color-scheme: light) {
-    color: var(--color-text);
-    background-color: var(--color-background);
-  }
 }
