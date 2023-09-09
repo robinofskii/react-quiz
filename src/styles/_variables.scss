@@ -1,0 +1,88 @@
+:root {
+  // Breakpoints
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 672px;
+  --breakpoint-md: 990px;
+  --breakpoint-lg: 1296px;
+  --breakpoint-xl: 1920px;
+
+  // Media queries
+  --mq-xs: '(min-width: 0px)';
+  --mq-sm: '(min-width: 672px)';
+  --mq-md: '(min-width: 990px)';
+  --mq-lg: '(min-width: 1296px)';
+  --mq-xl: '(min-width: 1920px)';
+  --mq-xs-only: '(min-width: 0px) and (max-width: 671px)';
+  --mq-sm-only: '(min-width: 672px) and (max-width: 989px)';
+  --mq-md-only: '(min-width: 990px) and (max-width: 1295px)';
+  --mq-lg-only: '(min-width: 1296px) and (max-width: 1919px)';
+  --mq-xl-only: '(min-width: 1920px)';
+
+  // Typography
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans-serif: 'Prompt', sans-serif;
+
+  --font-size-xxl: 2.125rem;
+  --font-size-xl: 1.875rem;
+  --font-size-lg: 1.5rem;
+  --font-size-md: 1.25rem;
+  --font-size-sm: 1.125rem;
+  --font-size-xs: 1rem;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-xxl: 1;
+  --line-height-xl: 1.067;
+  --line-height-lg: 1.083;
+  --line-height-md: 1.1;
+  --line-height-sm: 1.111;
+  --line-height-xs: 1.125;
+
+  @media screen and (var(--mq-sm-only)) {
+    --font-size-xxl: 1.5rem;
+    --font-size-xl: 1.125rem;
+    --font-size-lg: 1.125rem;
+  }
+
+  @media screen and (var(--mq-md-only)) {
+    --font-size-xl: 1.5rem;
+    --font-size-lg: 1.25rem;
+    --font-size-md: 1.125rem;
+    --font-size-sm: 1rem;
+  }
+
+  // Colors
+  --color-primary: #6c22ff;
+  --color-primary-dark: #4d1aff;
+  --color-primary-light: #9575cd;
+  --color-secondary: #b5ff22;
+  --color-secondary-dark: #76ff03;
+  --color-secondary-light: #c5e1a5;
+  --color-accent: #ffeb3b;
+  --color-accent-dark: #fbc02d;
+  --color-accent-light: #ffecb3;
+  --color-success: #4caf50;
+  --color-success-dark: #388e3c;
+  --color-success-light: #81c784;
+  --color-warning: #ffc107;
+  --color-warning-dark: #ffb300;
+  --color-warning-light: #ffca28;
+  --color-error: #f44336;
+  --color-error-dark: #d32f2f;
+  --color-error-light: #e57373;
+  --color-info: #2196f3;
+  --color-info-dark: #1976d2;
+  --color-info-light: #64b5f6;
+  --color-text: rgba(0, 0, 0, 0.87);
+  --color-text-dark: rgba(255, 255, 255, 0.87);
+  --color-text-light: rgba(0, 0, 0, 0.6);
+  --color-text-disabled: rgba(0, 0, 0, 0.38);
+  --color-text-disabled-dark: rgba(255, 255, 255, 0.38);
+  --color-text-disabled-light: rgba(0, 0, 0, 0.38);
+  --color-background: #fff;
+  --color-background-dark: #242424;
+}
