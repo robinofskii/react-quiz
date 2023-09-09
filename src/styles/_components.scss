@@ -1,0 +1,39 @@
+.btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+
+  border: none;
+  border-radius: var(--border-radius-sm);
+
+  font-size: var(--font-size-md);
+
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+
+  &.btn-primary {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-primary);
+    }
+  }
+
+  &.btn-secondary {
+    background-color: var(--color-secondary-dark);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &:disabled {
+    background-color: var(--color-background-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: var(--color-background-disabled);
+    }
+  }
+}

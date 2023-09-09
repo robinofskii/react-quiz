@@ -1,5 +1,8 @@
+@import '../../styles/mixins';
+
 .header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
@@ -7,5 +10,9 @@
 
   > img {
     width: 100px;
+  }
+
+  @include sm {
+    flex-direction: row;
   }
 }
