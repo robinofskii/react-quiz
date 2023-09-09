@@ -1,13 +1,14 @@
+import { Reducer, useEffect, useReducer } from 'react';
+
+import Error from './components/Error/Error';
 import Header from './components/Header/Header';
+import Loader from './components/Loader/Loader';
 import Main from './components/Main/Main';
+import Question from './components/Question/Question';
+import StartScreen from './components/StartScreen/StartScreen';
+import { Action, QuestionType } from './types';
 
 import './App.scss';
-import { Reducer, useEffect, useReducer } from 'react';
-import Error from './components/Error/Error';
-import Loader from './components/Loader/Loader';
-import StartScreen from './components/StartScreen/StartScreen';
-import Question from './components/Question/Question';
-import { Action, QuestionType } from './types';
 
 enum Status {
   'loading',
