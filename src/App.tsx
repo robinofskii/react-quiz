@@ -6,11 +6,14 @@ import { Reducer, useEffect, useReducer } from 'react';
 import Error from './components/Error/Error';
 import Loader from './components/Loader/Loader';
 import StartScreen from './components/StartScreen/StartScreen';
+import Question from './components/Question/Question';
 
 enum Status {
   'loading',
   'success',
   'error',
+  'active',
+  'done',
 }
 
 type Question = {
@@ -20,14 +23,16 @@ type Question = {
   points: number;
 };
 
-type Action =
+export type Action =
   | { type: 'FETCH_QUESTIONS' }
   | { type: 'FETCH_QUESTIONS_SUCCESS'; payload: Question[] }
-  | { type: 'FETCH_QUESTIONS_ERROR' };
+  | { type: 'FETCH_QUESTIONS_ERROR' }
+  | { type: 'START_QUIZ' };
 
 type State = {
   questions: Question[];
   status: Status;
+  currentQuestion?: number;
 };
 
 const initialState: State = {
@@ -43,6 +48,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, status: Status.success, questions: action.payload };
     case 'FETCH_QUESTIONS_ERROR':
       return { ...state, status: Status.error };
+    case 'START_QUIZ':
+      return { ...state, status: Status.active };
     default:
       console.error('Unknown action type');
       return state;
@@ -79,7 +86,10 @@ function App() {
       content = <Error />;
       break;
     case Status.success:
-      content = <StartScreen numQuestions={numQuestions} />;
+      content = <StartScreen numQuestions={numQuestions} dispatch={dispatch} />;
+      break;
+    case Status.active:
+      content = <Question />;
       break;
     default:
       content =
