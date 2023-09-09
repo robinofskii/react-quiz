@@ -22,12 +22,16 @@ type State = {
   questions: QuestionType[];
   status: Status;
   currentQuestion: number;
+  playerAnswer?: number;
+  points: number;
 };
 
 const initialState: State = {
   questions: [],
   status: Status.loading,
   currentQuestion: 0,
+  playerAnswer: undefined,
+  points: 0,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -40,6 +44,27 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, status: Status.error };
     case 'START_QUIZ':
       return { ...state, status: Status.active };
+    case 'NEXT_QUESTION': {
+      if (state.currentQuestion === state.questions.length - 1) {
+        return { ...state, status: Status.done };
+      }
+
+      return {
+        ...state,
+        currentQuestion: state.currentQuestion + 1,
+        playerAnswer: undefined,
+      };
+    }
+    case 'PLAYER_ANSWER': {
+      const question = state.questions[state.currentQuestion];
+      const isCorrect = action.payload === question.correctOption;
+
+      return {
+        ...state,
+        playerAnswer: action.payload,
+        points: isCorrect ? state.points + question.points : state.points,
+      };
+    }
     default:
       console.error('Unknown action type');
       return state;
@@ -47,9 +72,10 @@ const reducer = (state: State, action: Action): State => {
 };
 
 function App() {
-  const [{ questions, status, currentQuestion }, dispatch] = useReducer<
-    Reducer<State, Action>
-  >(reducer, initialState);
+  const [
+    { questions, status, currentQuestion, playerAnswer, points },
+    dispatch,
+  ] = useReducer<Reducer<State, Action>>(reducer, initialState);
 
   const numQuestions = questions.length;
 
@@ -78,7 +104,24 @@ function App() {
       content = <StartScreen numQuestions={numQuestions} dispatch={dispatch} />;
       break;
     case Status.active:
-      content = <Question question={questions[currentQuestion]} />;
+      content = (
+        <>
+          <p>Points: {points}</p>
+          <Question
+            question={questions[currentQuestion]}
+            dispatch={dispatch}
+            answer={playerAnswer}
+          />
+        </>
+      );
+      break;
+    case Status.done:
+      content = (
+        <>
+          <p>Points: {points}</p>
+          <p>Done!</p>
+        </>
+      );
       break;
     default:
       content =
