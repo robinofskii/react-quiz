@@ -1,4 +1,4 @@
-import { Action, ActionTypes, QuestionType } from '../../types';
+import { Action, QuestionType } from '../../types';
 
 import Options from './Options/Options';
 
@@ -15,14 +15,6 @@ const Question = ({ question, dispatch, answer }: Props) => {
     <section className="question-container">
       <h3>{question.question}</h3>
       <Options question={question} dispatch={dispatch} answer={answer} />
-      {answer !== undefined && (
-        <button
-          className="btn btn-primary"
-          onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
-        >
-          Next
-        </button>
-      )}
     </section>
   );
 };

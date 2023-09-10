@@ -130,6 +130,22 @@ function App() {
             dispatch={dispatch}
             answer={playerAnswer}
           />
+          {playerAnswer !== undefined &&
+          currentQuestion !== numQuestions - 1 ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              className="btn btn-info"
+              onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
+            >
+              Done
+            </button>
+          )}
         </>
       );
       break;

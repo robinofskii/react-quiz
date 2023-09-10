@@ -36,6 +36,33 @@
     }
   }
 
+  &.btn-danger {
+    background-color: var(--color-danger-dark);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-danger);
+    }
+  }
+
+  &.btn-success {
+    background-color: var(--color-success-dark);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-success);
+    }
+  }
+
+  &.btn-info {
+    background-color: var(--color-info-dark);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-info);
+    }
+  }
+
   &:disabled {
     background-color: var(--color-background-disabled);
     color: var(--color-text-disabled);
