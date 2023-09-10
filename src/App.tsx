@@ -1,6 +1,7 @@
 import { Reducer, useEffect, useReducer } from 'react';
 
 import Error from './components/Error/Error';
+import Footer from './components/Footer/Footer';
 import GameOverScreen from './components/GameOverScreen/GameOverScreen';
 import Header from './components/Header/Header';
 import Loader from './components/Loader/Loader';
@@ -8,13 +9,16 @@ import Main from './components/Main/Main';
 import Progress from './components/Progress/Progress';
 import Question from './components/Question/Question';
 import StartScreen from './components/StartScreen/StartScreen';
+import Timer from './components/Timer/Timer';
 import { Action, ActionTypes, QuestionType } from './types';
 
 import './App.scss';
 
+const SECONDS_PER_QUESTION = 10;
+
 enum Status {
   'loading',
-  'success',
+  'ready',
   'error',
   'active',
   'done',
@@ -27,6 +31,7 @@ type State = {
   playerAnswer?: number;
   points: number;
   highscore: number;
+  secondsRemaining: number;
 };
 
 const initialState: State = {
@@ -36,6 +41,7 @@ const initialState: State = {
   playerAnswer: undefined,
   points: 0,
   highscore: 0,
+  secondsRemaining: 0,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -43,11 +49,15 @@ const reducer = (state: State, action: Action): State => {
     case ActionTypes.FETCH_QUESTIONS:
       return { ...state, status: Status.loading };
     case ActionTypes.FETCH_QUESTIONS_SUCCESS:
-      return { ...state, status: Status.success, questions: action.payload };
+      return { ...state, status: Status.ready, questions: action.payload };
     case ActionTypes.FETCH_QUESTIONS_ERROR:
       return { ...state, status: Status.error };
     case ActionTypes.START_QUIZ:
-      return { ...state, status: Status.active };
+      return {
+        ...state,
+        status: Status.active,
+        secondsRemaining: state.questions.length * SECONDS_PER_QUESTION,
+      };
     case ActionTypes.NEXT_QUESTION: {
       return {
         ...state,
@@ -65,6 +75,12 @@ const reducer = (state: State, action: Action): State => {
         points: isCorrect ? state.points + question.points : state.points,
       };
     }
+    case ActionTypes.TIMER_TICK:
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        status: state.secondsRemaining === 0 ? Status.done : state.status,
+      };
     case ActionTypes.DONE:
       return {
         ...state,
@@ -74,11 +90,10 @@ const reducer = (state: State, action: Action): State => {
       };
     case ActionTypes.RESET:
       return {
-        ...state,
-        status: Status.success,
-        currentQuestion: 0,
-        playerAnswer: undefined,
-        points: 0,
+        ...initialState,
+        highscore: state.highscore,
+        questions: state.questions,
+        status: Status.ready,
       };
     default:
       console.error('Unknown action type');
@@ -88,7 +103,15 @@ const reducer = (state: State, action: Action): State => {
 
 function App() {
   const [
-    { questions, status, currentQuestion, playerAnswer, points, highscore },
+    {
+      questions,
+      status,
+      currentQuestion,
+      playerAnswer,
+      points,
+      highscore,
+      secondsRemaining,
+    },
     dispatch,
   ] = useReducer<Reducer<State, Action>>(reducer, initialState);
 
@@ -119,7 +142,7 @@ function App() {
     case Status.error:
       content = <Error />;
       break;
-    case Status.success:
+    case Status.ready:
       content = <StartScreen numQuestions={numQuestions} dispatch={dispatch} />;
       break;
     case Status.active:
@@ -136,24 +159,27 @@ function App() {
             dispatch={dispatch}
             answer={playerAnswer}
           />
-          {playerAnswer !== undefined &&
-            currentQuestion !== numQuestions - 1 && (
-              <button
-                className="btn btn-primary"
-                onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
-              >
-                Next
-              </button>
-            )}
-          {playerAnswer !== undefined &&
-            currentQuestion === numQuestions - 1 && (
-              <button
-                className="btn btn-info"
-                onClick={() => dispatch({ type: ActionTypes.DONE })}
-              >
-                Done
-              </button>
-            )}
+          <Footer>
+            <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+            {playerAnswer !== undefined &&
+              currentQuestion !== numQuestions - 1 && (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
+                >
+                  <p>Next</p>
+                </button>
+              )}
+            {playerAnswer !== undefined &&
+              currentQuestion === numQuestions - 1 && (
+                <button
+                  className="btn btn-info"
+                  onClick={() => dispatch({ type: ActionTypes.DONE })}
+                >
+                  <p>Done</p>
+                </button>
+              )}
+          </Footer>
         </>
       );
       break;

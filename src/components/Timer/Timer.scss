@@ -1,0 +1,9 @@
+.timer-container {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  text-align: center;
+  background-color: var(--color-info-dark);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-md) inset;
+
+  align-self: flex-start;
+}

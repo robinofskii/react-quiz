@@ -9,6 +9,7 @@ export enum ActionTypes {
   PLAYER_ANSWER = 'PLAYER_ANSWER',
   RESET = 'RESET',
   DONE = 'DONE',
+  TIMER_TICK = 'TIMER_TICK',
 }
 
 interface FetchQuestionsAction {
@@ -45,6 +46,10 @@ interface DoneAction {
   type: ActionTypes.DONE;
 }
 
+interface TickAction {
+  type: ActionTypes.TIMER_TICK;
+}
+
 export type Action =
   | FetchQuestionsAction
   | FetchQuestionsSuccessAction
@@ -53,4 +58,5 @@ export type Action =
   | NextQuestionAction
   | PlayerAnswerAction
   | ResetAction
-  | DoneAction;
+  | DoneAction
+  | TickAction;
