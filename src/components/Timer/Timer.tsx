@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 
-import { Action, ActionTypes } from '../../types';
+import { useQuizContext } from '../../hooks/useQuizContext';
+import { ActionTypes } from '../../types';
 
 import './Timer.scss';
 
-interface Props {
-  dispatch: React.Dispatch<Action>;
-  secondsRemaining: number;
-}
+const Timer = () => {
+  const { dispatch, secondsRemaining } = useQuizContext();
 
-const Timer = ({ dispatch, secondsRemaining }: Props) => {
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch({ type: ActionTypes.TIMER_TICK });

@@ -1,17 +1,18 @@
 import { clsx } from 'clsx';
 
-import { Action, ActionTypes, QuestionType } from '../../../types';
+import { useQuizContext } from '../../../hooks/useQuizContext';
+import { ActionTypes, QuestionType } from '../../../types';
 
 import './Options.scss';
 
 interface Props {
   question: QuestionType;
-  dispatch: React.Dispatch<Action>;
-  answer: number | undefined;
 }
 
-const Options = ({ question, dispatch, answer }: Props) => {
-  const hasAnswered = answer !== undefined;
+const Options = ({ question }: Props) => {
+  const { dispatch, playerAnswer } = useQuizContext();
+
+  const hasAnswered = playerAnswer !== undefined;
 
   return (
     <div className="question-options-container">
@@ -20,11 +21,13 @@ const Options = ({ question, dispatch, answer }: Props) => {
           key={index}
           className={clsx('btn btn-option', {
             correct:
-              (answer === question.correctOption && answer === index) ||
+              (playerAnswer === question.correctOption &&
+                playerAnswer === index) ||
               (hasAnswered &&
-                answer !== question.correctOption &&
+                playerAnswer !== question.correctOption &&
                 question.correctOption === index),
-            incorrect: answer !== question.correctOption && answer === index,
+            incorrect:
+              playerAnswer !== question.correctOption && playerAnswer === index,
           })}
           disabled={hasAnswered}
           onClick={() =>

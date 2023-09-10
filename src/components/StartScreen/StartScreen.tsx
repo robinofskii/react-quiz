@@ -1,13 +1,11 @@
-import { Action, ActionTypes } from '../../types';
+import { useQuizContext } from '../../hooks/useQuizContext';
+import { ActionTypes } from '../../types';
 
 import './StartScreen.scss';
 
-interface Props {
-  numQuestions: number;
-  dispatch: React.Dispatch<Action>;
-}
+const StartScreen = () => {
+  const { numQuestions, dispatch } = useQuizContext();
 
-const StartScreen = ({ numQuestions, dispatch }: Props) => {
   return (
     <div id="start-screen-container">
       <h2>Welcome to The React Quiz</h2>

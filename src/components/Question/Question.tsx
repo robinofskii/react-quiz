@@ -1,21 +1,44 @@
-import { Action, QuestionType } from '../../types';
+import { useQuizContext } from '../../hooks/useQuizContext';
+import { ActionTypes } from '../../types';
+import Footer from '../Footer/Footer';
+import Timer from '../Timer/Timer';
 
 import Options from './Options/Options';
 
 import './Question.scss';
 
-interface Props {
-  question: QuestionType;
-  dispatch: React.Dispatch<Action>;
-  answer: number | undefined;
-}
+const Question = () => {
+  const { questions, currentQuestion, playerAnswer, numQuestions, dispatch } =
+    useQuizContext();
 
-const Question = ({ question, dispatch, answer }: Props) => {
+  const question = questions[currentQuestion];
+
   return (
-    <section className="question-container">
-      <h3>{question.question}</h3>
-      <Options question={question} dispatch={dispatch} answer={answer} />
-    </section>
+    <>
+      <section className="question-container">
+        <h3>{question.question}</h3>
+        <Options question={question} />
+      </section>
+      <Footer>
+        <Timer />
+        {playerAnswer !== undefined && currentQuestion !== numQuestions - 1 && (
+          <button
+            className="btn btn-primary"
+            onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
+          >
+            <p>Next</p>
+          </button>
+        )}
+        {playerAnswer !== undefined && currentQuestion === numQuestions - 1 && (
+          <button
+            className="btn btn-info"
+            onClick={() => dispatch({ type: ActionTypes.DONE })}
+          >
+            <p>Done</p>
+          </button>
+        )}
+      </Footer>
+    </>
   );
 };
 
