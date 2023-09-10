@@ -1,16 +1,12 @@
-import { Action, ActionTypes } from '../../types';
+import { useQuizContext } from '../../hooks/useQuizContext';
+import { ActionTypes } from '../../types';
 
 import './GameOverScreen.scss';
 
-interface Props {
-  highscore: number;
-  points: number;
-  maxPoints: number;
-  dispatch: React.Dispatch<Action>;
-}
+const GameOverScreen = () => {
+  const { points, maxPossiblePoints, dispatch } = useQuizContext();
 
-const GameOverScreen = ({ points, maxPoints, dispatch }: Props) => {
-  const percentage = Math.round((points / maxPoints) * 100);
+  const percentage = Math.round((points / maxPossiblePoints) * 100);
 
   const colorbasedOnPercentage = () => {
     if (percentage < 50) {
@@ -28,7 +24,7 @@ const GameOverScreen = ({ points, maxPoints, dispatch }: Props) => {
     <section className="game-over-screen-container">
       <h2>Game Over</h2>
       <p>
-        You scored <strong>{points}</strong> out of {maxPoints} points (
+        You scored <strong>{points}</strong> out of {maxPossiblePoints} points (
         <span className={`color-${colorbasedOnPercentage()}`}>
           {percentage}%
         </span>
@@ -39,7 +35,7 @@ const GameOverScreen = ({ points, maxPoints, dispatch }: Props) => {
       </p>
       <button
         className="btn btn-warning"
-        onClick={() => dispatch({ type: ActionTypes.RESET })}
+        onClick={() => dispatch && dispatch({ type: ActionTypes.RESET })}
       >
         Reset
       </button>

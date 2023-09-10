@@ -1,37 +1,30 @@
+import { useQuizContext } from '../../hooks/useQuizContext';
+
 import './Progress.scss';
 
-interface Props {
-  currentQuestion: number;
-  totalQuestions: number;
-  points: number;
-  maxPoints: number;
-}
+const Progress = () => {
+  const { currentQuestion, numQuestions, points, maxPossiblePoints } =
+    useQuizContext();
 
-const Progress = ({
-  currentQuestion,
-  totalQuestions,
-  points,
-  maxPoints,
-}: Props) => {
   return (
     <header className="progress-container">
       <div className="progress">
         <div
           className="progress-bar"
           style={{
-            width: `${((currentQuestion - 1) / totalQuestions) * 100}%`,
+            width: `${(currentQuestion / numQuestions) * 100}%`,
           }}
         />
       </div>
       <div className="progress-info">
         <div className="progress-info__question">
           <p>
-            Question: {currentQuestion} / {totalQuestions}
+            Question: {currentQuestion} / {numQuestions}
           </p>
         </div>
         <div className="progress-info__points">
           <p>
-            {points} / {maxPoints} points
+            {points} / {maxPossiblePoints} points
           </p>
         </div>
       </div>
