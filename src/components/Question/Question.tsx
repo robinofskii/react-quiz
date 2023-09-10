@@ -12,7 +12,7 @@ interface Props {
 
 const Question = ({ question, dispatch, answer }: Props) => {
   return (
-    <div className="question-container">
+    <section className="question-container">
       <h3>{question.question}</h3>
       <Options question={question} dispatch={dispatch} answer={answer} />
       {answer !== undefined && (
@@ -23,7 +23,7 @@ const Question = ({ question, dispatch, answer }: Props) => {
           Next
         </button>
       )}
-    </div>
+    </section>
   );
 };
 

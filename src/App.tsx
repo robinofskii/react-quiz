@@ -4,6 +4,7 @@ import Error from './components/Error/Error';
 import Header from './components/Header/Header';
 import Loader from './components/Loader/Loader';
 import Main from './components/Main/Main';
+import Progress from './components/Progress/Progress';
 import Question from './components/Question/Question';
 import StartScreen from './components/StartScreen/StartScreen';
 import { Action, ActionTypes, QuestionType } from './types';
@@ -86,6 +87,10 @@ function App() {
   ] = useReducer<Reducer<State, Action>>(reducer, initialState);
 
   const numQuestions = questions.length;
+  const maxPossiblePoints = questions.reduce(
+    (acc, question) => acc + question.points,
+    0
+  );
 
   useEffect(() => {
     dispatch({ type: ActionTypes.FETCH_QUESTIONS });
@@ -114,7 +119,12 @@ function App() {
     case Status.active:
       content = (
         <>
-          <p>Points: {points}</p>
+          <Progress
+            currentQuestion={currentQuestion + 1}
+            totalQuestions={numQuestions}
+            points={points}
+            maxPoints={maxPossiblePoints}
+          />
           <Question
             question={questions[currentQuestion]}
             dispatch={dispatch}
