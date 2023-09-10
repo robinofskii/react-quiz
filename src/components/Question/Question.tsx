@@ -1,4 +1,4 @@
-import { Action, QuestionType } from '../../types';
+import { Action, ActionTypes, QuestionType } from '../../types';
 
 import Options from './Options/Options';
 
@@ -18,7 +18,7 @@ const Question = ({ question, dispatch, answer }: Props) => {
       {answer !== undefined && (
         <button
           className="btn btn-primary"
-          onClick={() => dispatch({ type: 'NEXT_QUESTION' })}
+          onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
         >
           Next
         </button>

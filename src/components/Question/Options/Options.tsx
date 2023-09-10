@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 
-import { Action, QuestionType } from '../../../types';
+import { Action, ActionTypes, QuestionType } from '../../../types';
 
 import './Options.scss';
 
@@ -27,7 +27,9 @@ const Options = ({ question, dispatch, answer }: Props) => {
             incorrect: answer !== question.correctOption && answer === index,
           })}
           disabled={hasAnswered}
-          onClick={() => dispatch({ type: 'PLAYER_ANSWER', payload: index })}
+          onClick={() =>
+            dispatch({ type: ActionTypes.PLAYER_ANSWER, payload: index })
+          }
         >
           {option}
         </button>

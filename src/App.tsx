@@ -6,7 +6,7 @@ import Loader from './components/Loader/Loader';
 import Main from './components/Main/Main';
 import Question from './components/Question/Question';
 import StartScreen from './components/StartScreen/StartScreen';
-import { Action, QuestionType } from './types';
+import { Action, ActionTypes, QuestionType } from './types';
 
 import './App.scss';
 
@@ -88,14 +88,14 @@ function App() {
   const numQuestions = questions.length;
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_QUESTIONS' });
+    dispatch({ type: ActionTypes.FETCH_QUESTIONS });
     fetch('http://localhost:3001/questions')
       .then((res) => res.json())
       .then((data: QuestionType[]) => {
-        dispatch({ type: 'FETCH_QUESTIONS_SUCCESS', payload: data });
+        dispatch({ type: ActionTypes.FETCH_QUESTIONS_SUCCESS, payload: data });
       })
       .catch((err) => {
-        dispatch({ type: 'FETCH_QUESTIONS_ERROR' });
+        dispatch({ type: ActionTypes.FETCH_QUESTIONS_ERROR });
         console.error(err);
       });
   }, []);
@@ -130,7 +130,7 @@ function App() {
           <p>Done!</p>
           <button
             className="btn btn-warning"
-            onClick={() => dispatch({ type: 'RESET' })}
+            onClick={() => dispatch({ type: ActionTypes.RESET })}
           >
             Reset
           </button>

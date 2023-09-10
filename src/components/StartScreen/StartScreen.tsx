@@ -1,4 +1,4 @@
-import { Action } from '../../types';
+import { Action, ActionTypes } from '../../types';
 
 import './StartScreen.scss';
 
@@ -14,7 +14,7 @@ const StartScreen = ({ numQuestions, dispatch }: Props) => {
       <p>{numQuestions} questions to test your React mastery</p>
       <button
         className="btn btn-primary"
-        onClick={() => dispatch({ type: 'START_QUIZ' })}
+        onClick={() => dispatch({ type: ActionTypes.START_QUIZ })}
       >
         Start Quiz
       </button>
