@@ -8,6 +8,7 @@ export enum ActionTypes {
   NEXT_QUESTION = 'NEXT_QUESTION',
   PLAYER_ANSWER = 'PLAYER_ANSWER',
   RESET = 'RESET',
+  DONE = 'DONE',
 }
 
 interface FetchQuestionsAction {
@@ -40,6 +41,10 @@ interface ResetAction {
   type: ActionTypes.RESET;
 }
 
+interface DoneAction {
+  type: ActionTypes.DONE;
+}
+
 export type Action =
   | FetchQuestionsAction
   | FetchQuestionsSuccessAction
@@ -47,4 +52,5 @@ export type Action =
   | StartQuizAction
   | NextQuestionAction
   | PlayerAnswerAction
-  | ResetAction;
+  | ResetAction
+  | DoneAction;

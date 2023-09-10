@@ -1,6 +1,7 @@
 import { Reducer, useEffect, useReducer } from 'react';
 
 import Error from './components/Error/Error';
+import GameOverScreen from './components/GameOverScreen/GameOverScreen';
 import Header from './components/Header/Header';
 import Loader from './components/Loader/Loader';
 import Main from './components/Main/Main';
@@ -25,6 +26,7 @@ type State = {
   currentQuestion: number;
   playerAnswer?: number;
   points: number;
+  highscore: number;
 };
 
 const initialState: State = {
@@ -33,30 +35,27 @@ const initialState: State = {
   currentQuestion: 0,
   playerAnswer: undefined,
   points: 0,
+  highscore: 0,
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'FETCH_QUESTIONS':
+    case ActionTypes.FETCH_QUESTIONS:
       return { ...state, status: Status.loading };
-    case 'FETCH_QUESTIONS_SUCCESS':
+    case ActionTypes.FETCH_QUESTIONS_SUCCESS:
       return { ...state, status: Status.success, questions: action.payload };
-    case 'FETCH_QUESTIONS_ERROR':
+    case ActionTypes.FETCH_QUESTIONS_ERROR:
       return { ...state, status: Status.error };
-    case 'START_QUIZ':
+    case ActionTypes.START_QUIZ:
       return { ...state, status: Status.active };
-    case 'NEXT_QUESTION': {
-      if (state.currentQuestion === state.questions.length - 1) {
-        return { ...state, status: Status.done };
-      }
-
+    case ActionTypes.NEXT_QUESTION: {
       return {
         ...state,
         currentQuestion: state.currentQuestion + 1,
         playerAnswer: undefined,
       };
     }
-    case 'PLAYER_ANSWER': {
+    case ActionTypes.PLAYER_ANSWER: {
       const question = state.questions[state.currentQuestion];
       const isCorrect = action.payload === question.correctOption;
 
@@ -66,9 +65,16 @@ const reducer = (state: State, action: Action): State => {
         points: isCorrect ? state.points + question.points : state.points,
       };
     }
-    case 'RESET':
+    case ActionTypes.DONE:
       return {
-        questions: state.questions,
+        ...state,
+        status: Status.done,
+        highscore:
+          state.points > state.highscore ? state.points : state.highscore,
+      };
+    case ActionTypes.RESET:
+      return {
+        ...state,
         status: Status.success,
         currentQuestion: 0,
         playerAnswer: undefined,
@@ -82,7 +88,7 @@ const reducer = (state: State, action: Action): State => {
 
 function App() {
   const [
-    { questions, status, currentQuestion, playerAnswer, points },
+    { questions, status, currentQuestion, playerAnswer, points, highscore },
     dispatch,
   ] = useReducer<Reducer<State, Action>>(reducer, initialState);
 
@@ -131,36 +137,34 @@ function App() {
             answer={playerAnswer}
           />
           {playerAnswer !== undefined &&
-          currentQuestion !== numQuestions - 1 ? (
-            <button
-              className="btn btn-primary"
-              onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              className="btn btn-info"
-              onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
-            >
-              Done
-            </button>
-          )}
+            currentQuestion !== numQuestions - 1 && (
+              <button
+                className="btn btn-primary"
+                onClick={() => dispatch({ type: ActionTypes.NEXT_QUESTION })}
+              >
+                Next
+              </button>
+            )}
+          {playerAnswer !== undefined &&
+            currentQuestion === numQuestions - 1 && (
+              <button
+                className="btn btn-info"
+                onClick={() => dispatch({ type: ActionTypes.DONE })}
+              >
+                Done
+              </button>
+            )}
         </>
       );
       break;
     case Status.done:
       content = (
-        <>
-          <p>Points: {points}</p>
-          <p>Done!</p>
-          <button
-            className="btn btn-warning"
-            onClick={() => dispatch({ type: ActionTypes.RESET })}
-          >
-            Reset
-          </button>
-        </>
+        <GameOverScreen
+          dispatch={dispatch}
+          points={points}
+          maxPoints={maxPossiblePoints}
+          highscore={highscore}
+        />
       );
       break;
     default:

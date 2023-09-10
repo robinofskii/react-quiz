@@ -21,3 +21,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+// Global classes
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-secondary {
+  color: var(--color-secondary);
+}
+
+.color-warning {
+  color: var(--color-warning);
+}
+
+.color-error {
+  color: var(--color-error);
+}
+
+.color-success {
+  color: var(--color-success);
+}
+
+.color-info {
+  color: var(--color-info);
+}
